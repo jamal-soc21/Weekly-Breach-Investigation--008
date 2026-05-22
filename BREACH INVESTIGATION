@@ -1,0 +1,83 @@
+Weekly Breach Investigation
+Breach: Showboat Linux Malware — Telecom Sector Targeting
+Analyst: Jamal Mahmoad
+Date: 2026-05-22
+
+1. Executive Summary
+Researchers uncovered Showboat, a modular Linux post‑exploitation framework used since mid‑2022 against telecom providers in the Middle East.
+The malware provides remote shell, file transfer, and SOCKS5 proxy capabilities.
+Attribution points to China‑linked groups, including Calypso (aka Bronze Medley / Red Lamassu), with overlaps to PlugX, ShadowPad, and Mikroceen toolsets.
+The campaign highlights resource sharing among state‑sponsored actors and poses severe risks to telecom infrastructure.
+
+2. Attack Timeline
+Jan 2022: Pastebin snippet created for concealment.
+
+Mid‑2022: Showboat deployed against Middle East telecom.
+
+May 2025: ELF binary uploaded to VirusTotal, flagged as advanced Linux backdoor (EvaRAT).
+
+2025–2026: Infrastructure analysis reveals victims in Afghanistan, Azerbaijan, U.S., and Ukraine.
+
+May 2026: Public disclosure by Black Lotus Labs & PwC.
+
+Exploitation Path:
+
+Initial access vector unknown (suspected web shell / default accounts).
+
+Deployment of ELF Showboat binary.
+
+Establish C2 connection, exfiltrate system info via PNG field (Base64 + encryption).
+
+Enable remote shell, file transfer, SOCKS5 proxy.
+
+Hide presence using Pastebin‑hosted code snippet.
+
+Spread laterally to LAN‑only devices.
+
+3. MITRE ATT&CK Mapping
+Execution: Command & Scripting Interpreter (T1059)
+
+Persistence: Modify Config Files (T1112)
+
+Defense Evasion: Masquerading / Rootkit‑like concealment (T1036)
+
+Credential Access: Exploit Default Accounts / Web Shells (T1078)
+
+Command & Control: Application Layer Protocol (T1071), Encrypted Channel (T1573), Proxy (T1090)
+
+4. Detection Opportunities
+Log Sources:
+
+Linux audit logs
+
+Container runtime telemetry
+
+Network proxy logs
+
+Pastebin traffic monitoring
+
+Detection Rules:
+
+Alert on suspicious PNG field exfiltration.
+
+Monitor for hidden processes / anomalies in ps output.
+
+Flag unauthorized SOCKS5 proxy activity.
+
+Detect abnormal Pastebin retrievals.
+
+5. Recommended Mitigations
+Patch Linux systems and harden container environments.
+
+Restrict outbound connections to Pastebin and suspicious C2 IPs.
+
+Audit telecom infrastructure for hidden implants.
+
+Enforce credential rotation and disable default accounts.
+
+Deploy EDR capable of detecting rootkit‑like behavior.
+
+Analyst Notes
+Showboat demonstrates the evolution of Linux malware into modular frameworks comparable to Windows APT toolkits.
+Its stealth, proxying, and resource sharing across China‑linked groups highlight a quartermaster model supplying multiple actors.
+Telecom providers and ISPs remain high‑value targets, requiring proactive monitoring and rapid incident response
